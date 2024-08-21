@@ -3,32 +3,43 @@ package com.trilion.ecommerce.service;
 import java.util.List;
 import java.util.Objects;
 
+import javax.management.relation.RelationNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.trilion.ecommerce.entity.Customer;
-import com.trilion.ecommerce.repository.CustomerRepository;
+import com.trilion.ecommerce.entity.User;
+import com.trilion.ecommerce.entity.Order;
+import com.trilion.ecommerce.repository.UserRepository;
+import com.trilion.ecommerce.repository.OrderRepository;
 
 @Service
-public class CustomerService {
+public class UserService {
 
   @Autowired
-  private CustomerRepository userRepository;
+  private UserRepository userRepository;
 
-  public Customer save(Customer user) {
+  @Autowired
+  private OrderRepository orderRepository;
+
+  public User save(User user) {
     return userRepository.save(user);
   }
 
-  public Customer getUserById(Long id) {
+  public User getUserById(Long id) {
     return userRepository.findById(id).orElse(null);
   }
 
-  public List<Customer> getAllCustomers() {
+  public User getUserByEmail(String email) {
+    return userRepository.findByEmail(email);
+  }
+
+  public List<User> getAllCustomers() {
     return userRepository.findAll();
   }
 
-  public Customer updateUser(Long id, Customer userInfo) {
-    Customer customer = this.getUserById(id);
+  public User updateUser(Long id, User userInfo) {
+    User customer = this.getUserById(id);
 
     if (Objects.nonNull(userInfo.getFirstName()) && !"".equalsIgnoreCase(customer.getFirstName())) {
       customer.setFirstName(userInfo.getFirstName());

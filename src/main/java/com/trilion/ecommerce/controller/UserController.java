@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.trilion.ecommerce.entity.Customer;
-import com.trilion.ecommerce.service.CustomerService;
+import com.trilion.ecommerce.entity.User;
+import com.trilion.ecommerce.service.UserService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,33 +17,38 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
-public class CustomerController {
+public class UserController {
 
-  private final CustomerService userService;
+  private final UserService userService;
 
-  CustomerController(CustomerService userService) {
+  UserController(UserService userService) {
     this.userService = userService;
   }
 
-  @PostMapping("/customer")
-  public ResponseEntity<Customer> newUser(@RequestBody Customer user) {
-    return new ResponseEntity<>(userService.save(user), HttpStatus.OK);
-  }
-
   @GetMapping("/customers")
-  public ResponseEntity<List<Customer>> getAllCustomers() {
-    List<Customer> customers = userService.getAllCustomers();
+  public ResponseEntity<List<User>> getAllCustomers() {
+    List<User> customers = userService.getAllCustomers();
     return new ResponseEntity<>(customers, HttpStatus.OK);
   }
 
   @GetMapping("/customer/{id}")
-  public ResponseEntity<Customer> getUser(@PathVariable Long id) {
+  public ResponseEntity<User> getUser(@PathVariable Long id) {
     return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
   }
 
+  @GetMapping("/customer/email/{email}")
+  public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
+    return new ResponseEntity<>(userService.getUserByEmail(email), HttpStatus.OK);
+  }
+
+  @PostMapping("/customer")
+  public ResponseEntity<User> newUser(@RequestBody User user) {
+    return new ResponseEntity<>(userService.save(user), HttpStatus.OK);
+  }
+
   @PutMapping("customer/{id}")
-  public ResponseEntity<Customer> update(@PathVariable Long id, @RequestBody Customer user) {
-    Customer updateCustomer = userService.updateUser(id, user);
+  public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user) {
+    User updateCustomer = userService.updateUser(id, user);
     return new ResponseEntity<>(updateCustomer, HttpStatus.OK);
   }
 

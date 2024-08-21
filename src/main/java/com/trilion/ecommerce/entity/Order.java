@@ -1,8 +1,6 @@
 package com.trilion.ecommerce.entity;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -11,21 +9,20 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 
 @Entity
-public class Orders {
+@Table(name = "orders")
+public class Order {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private Long productId;
-  private Long userId;
+  // private Long productId;
+  // private Long userId;
   private int quantity;
   private double totalCost;
 
@@ -34,8 +31,39 @@ public class Orders {
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime updatedAt;
 
-  @ManyToMany(mappedBy = "orders")
-  Set<Customer> customers;
+  @ManyToOne
+  @JoinColumn(name = "user_id", nullable = false)
+  // @JsonIgnore
+  private User user;
+
+  @ManyToOne
+  @JoinColumn(name = "product_id", nullable = false)
+  private Product product;
+
+  public Order() {
+  }
+
+  public Order(int quantity, double totalCost) {
+    this.quantity = quantity;
+    this.totalCost = totalCost;
+  }
+  // Getters and Setters
+
+  public Product getProduct() {
+    return product;
+  }
+
+  public void setProduct(Product product) {
+    this.product = product;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
 
   @PrePersist
   private void init() {
@@ -51,17 +79,17 @@ public class Orders {
     this.id = id;
   }
 
-  public Long getProductId() {
-    return productId;
-  }
+  // public Long getProductId() {
+  // return productId;
+  // }
 
-  public void setProductId(Long productId) {
-    this.productId = productId;
-  }
+  // public void setProductId(Long productId) {
+  // this.productId = productId;
+  // }
 
-  public Long getUserId() {
-    return userId;
-  }
+  // public Long getUserId() {
+  // return userId;
+  // }
 
   // public void setUserId(Long userId) {
   // this.userId = userId;

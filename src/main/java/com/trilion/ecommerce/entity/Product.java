@@ -7,14 +7,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "products")
-public class Inventory {
+public class Product {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,11 +24,11 @@ public class Inventory {
   private int quantity;
   private double unitPrice;
 
-  @ManyToMany
-  // @JoinTable(name = "product_orders", joinColumns = @JoinColumn(name =
-  // "user_id", referencedColumnName = "id"), inverseJoinColumns =
-  // @JoinColumn(name = "order_id", referencedColumnName = "id"))
-  private List<Orders> orders;
+  // @ManyToMany
+  // // @JoinTable(name = "product_orders", joinColumns = @JoinColumn(name =
+  // // "user_id", referencedColumnName = "id"), inverseJoinColumns =
+  // // @JoinColumn(name = "order_id", referencedColumnName = "id"))
+  // private List<Orders> orders;
 
   public String getSubCategory() {
     return subCategory;

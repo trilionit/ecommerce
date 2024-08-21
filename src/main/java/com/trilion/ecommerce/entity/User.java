@@ -1,13 +1,17 @@
 package com.trilion.ecommerce.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,8 +23,8 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "customers")
-public class Customer {
+@Table(name = "users")
+public class User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +32,7 @@ public class Customer {
 
   private String firstName;
   private String lastName;
+  private String email;
 
   private String address;
 
@@ -40,11 +45,27 @@ public class Customer {
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime updatedAt;
 
-  @ManyToMany
-  @JoinTable(name = "product_orders", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"))
-  Set<Orders> orders;
-  // @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-  // private List<Orders> orders;
+  public User() {
+  }
+
+  public User(
+      String firstName,
+      String lastName,
+      String email,
+      String address,
+      String city,
+      String state,
+      String zipcode) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.address = address;
+    this.city = city;
+    this.state = state;
+    this.zipcode = zipcode;
+  }
+
+  // Getters and Setters
 
   @PrePersist
   private void init() {
@@ -115,8 +136,6 @@ public class Customer {
   public String getLastName() {
     return lastName;
   }
-
-  private String email;
 
   // Getters and Setters
   public Long getId() {

@@ -5,32 +5,32 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.trilion.ecommerce.entity.Inventory;
+import com.trilion.ecommerce.entity.Product;
 import com.trilion.ecommerce.exceptions.ProductNotFoundException;
-import com.trilion.ecommerce.repository.InventoryRepository;
+import com.trilion.ecommerce.repository.ProductRepository;
 
 @Service
-public class InventoryService {
+public class ProductService {
 
   @Autowired
-  private InventoryRepository inventoryRepo;
+  private ProductRepository inventoryRepo;
 
-  public Inventory save(Inventory product) {
+  public Product save(Product product) {
     return inventoryRepo.save(product);
   }
 
-  public Inventory updateProduct(Long id, Inventory product) {
+  public Product updateProduct(Long id, Product product) {
 
     return product;
   }
 
-  public Inventory getProduct(Long id) {
-    Inventory product = inventoryRepo.findById(id).orElse(null);
+  public Product getProduct(Long id) {
+    Product product = inventoryRepo.findById(id).orElse(null);
     return product;
   }
 
-  public Inventory updateProductQty(Long id, int qty) throws ProductNotFoundException {
-    Inventory product = this.getProduct(id);
+  public Product updateProductQty(Long id, int qty) throws ProductNotFoundException {
+    Product product = this.getProduct(id);
 
     if (product != null) {
       product.setQuantity(qty);
@@ -43,8 +43,8 @@ public class InventoryService {
 
   }
 
-  public List<Inventory> getAllProducts() {
-    List<Inventory> products = inventoryRepo.findAll();
+  public List<Product> getAllProducts() {
+    List<Product> products = inventoryRepo.findAll();
     return products;
   }
 

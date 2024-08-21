@@ -2,9 +2,9 @@ package com.trilion.ecommerce.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.trilion.ecommerce.entity.Inventory;
+import com.trilion.ecommerce.entity.Product;
 import com.trilion.ecommerce.exceptions.ProductNotFoundException;
-import com.trilion.ecommerce.service.InventoryService;
+import com.trilion.ecommerce.service.ProductService;
 
 import java.util.List;
 
@@ -18,34 +18,34 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
-public class InventoryController {
+public class ProductController {
 
-  private final InventoryService inventoryService;
+  private final ProductService inventoryService;
 
-  InventoryController(InventoryService inventoryService) {
+  ProductController(ProductService inventoryService) {
     this.inventoryService = inventoryService;
   }
 
   @GetMapping("/inventory")
-  public ResponseEntity<List<Inventory>> getProducts() {
+  public ResponseEntity<List<Product>> getProducts() {
     return new ResponseEntity<>(inventoryService.getAllProducts(), HttpStatus.OK);
   }
 
   @PostMapping("/inventory/new")
-  public ResponseEntity<Inventory> addProduct(@RequestBody Inventory product) {
+  public ResponseEntity<Product> addProduct(@RequestBody Product product) {
     return new ResponseEntity<>(inventoryService.save(product), HttpStatus.OK);
   }
 
   @PutMapping("/inventory/{id}")
-  public ResponseEntity<Inventory> updateProduct(@PathVariable Long id, @RequestBody Inventory product) {
+  public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {
     inventoryService.updateProduct(id, product);
     return new ResponseEntity<>(product, HttpStatus.OK);
   }
 
   @PutMapping("/inventory/product/{id}/quantity/{qty}")
-  public ResponseEntity<Inventory> updateProductQty(@PathVariable Long id, @PathVariable int qty)
+  public ResponseEntity<Product> updateProductQty(@PathVariable Long id, @PathVariable int qty)
       throws ProductNotFoundException {
-    Inventory product = inventoryService.updateProductQty(id, qty);
+    Product product = inventoryService.updateProductQty(id, qty);
     return new ResponseEntity<>(product, HttpStatus.OK);
   }
 

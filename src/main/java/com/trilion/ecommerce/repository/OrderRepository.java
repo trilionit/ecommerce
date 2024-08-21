@@ -2,12 +2,12 @@ package com.trilion.ecommerce.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.trilion.ecommerce.entity.Orders;
+import com.trilion.ecommerce.entity.Order;
 import java.util.List;
 
-public interface OrderRepository extends JpaRepository<Orders, Long> {
+public interface OrderRepository extends JpaRepository<Order, Long> {
   // Custom query Methods (if needed) can be defined here
-  // List<Orders> findByProductId(Long productId);
+  List<Order> findByProductId(Long productId);
 
-  // List<Orders> findByUserId(Long userId);
+  List<Order> findByUserId(Long customerId);
 }
