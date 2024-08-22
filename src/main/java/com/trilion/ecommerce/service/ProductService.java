@@ -32,7 +32,7 @@ public class ProductService {
   public Product updateProductQty(Long id, int qty) throws ProductNotFoundException {
     Product product = this.getProduct(id);
 
-    if (product != null) {
+    if (product != null && qty > 0) {
       product.setQuantity(qty);
       inventoryRepo.save(product);
     } else {

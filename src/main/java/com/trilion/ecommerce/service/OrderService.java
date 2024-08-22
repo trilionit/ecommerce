@@ -1,6 +1,5 @@
 package com.trilion.ecommerce.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.management.relation.RelationNotFoundException;
@@ -14,8 +13,6 @@ import com.trilion.ecommerce.entity.Order;
 import com.trilion.ecommerce.repository.UserRepository;
 import com.trilion.ecommerce.repository.OrderRepository;
 import com.trilion.ecommerce.repository.ProductRepository;
-
-import jakarta.persistence.EntityManager;
 
 @Service
 public class OrderService {
@@ -38,37 +35,27 @@ public class OrderService {
         order.setProduct(product);
       }
       order.setUser(user);
+
+      // Get Product info to set up order
+      int orderQuantity = order.getQuantity();
+      double unitPrice = product.getUnitPrice();
+
+      int productQuantity = product.getQuantity();
+
+      // Calculate totalCost
+      double totalCost = unitPrice * orderQuantity;
+
+      order.setTotalCost(totalCost);
       orderRepository.save(order);
 
-      // user.setOrders(order);
-      customerRepository.save(user);
+      // update product Quantity
+      int currentQuantity = productQuantity - orderQuantity;
+      if (currentQuantity >= 0) {
+        product.setQuantity(currentQuantity);
+        productRepository.save(product);
+      }
     }
     return order;
-
-    // Orders saveCustomerOrder = customerRepository.findById(user_id).map(user -> {
-
-    // Products product = productRepository.findById(product_id).orElse(null);
-    // if (product != null) {
-    // order.setProducts(product);
-    // }
-
-    // order.setCustomer(user);
-    // return orderRepository.save(order);
-
-    // }).orElseThrow(() -> new RelationNotFoundException("no user found"));
-
-    // return saveCustomerOrder;
-    // return orderRepository.save(order);
-
-    // Customer user = customerRepository.findById(user_id)
-    // .orElseThrow(() -> new RelationNotFoundException("no user found"));
-
-    // orderRepository.save(order);
-    // List<Orders> userOrders = new ArrayList<>();
-    // userOrders.add(order);
-    // user.setOrders(userOrders);
-
-    // return order;
   }
 
   public Order getOrderById(Long id) {
@@ -85,10 +72,6 @@ public class OrderService {
   public List<Order> getOrdersByProductId(Long id) {
     return orderRepository.findByProductId(id);
   }
-
-  // public List<Orders> getOrdersByUserId(Long id) {
-  // return orderRepository.findByUserId(id);
-  // }
 
   public void placeOrder(User customer, Product products) {
 
