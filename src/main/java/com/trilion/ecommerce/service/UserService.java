@@ -44,18 +44,6 @@ public class UserService {
     if (Objects.nonNull(userInfo.getEmail()) && !"".equalsIgnoreCase(customer.getEmail())) {
       customer.setEmail(userInfo.getEmail());
     }
-    if (Objects.nonNull(userInfo.getAddress()) && !"".equalsIgnoreCase(customer.getAddress())) {
-      customer.setAddress(userInfo.getAddress());
-    }
-    if (Objects.nonNull(userInfo.getCity()) && !"".equalsIgnoreCase(customer.getCity())) {
-      customer.setCity(userInfo.getCity());
-    }
-    if (Objects.nonNull(userInfo.getCity()) && !"".equalsIgnoreCase(customer.getCity())) {
-      customer.setCity(userInfo.getCity());
-    }
-    if (Objects.nonNull(userInfo.getCity()) && !"".equalsIgnoreCase(customer.getCity())) {
-      customer.setCity(userInfo.getCity());
-    }
     customer.setUpdatedAt();
 
     return userRepository.save(customer);

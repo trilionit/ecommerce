@@ -3,7 +3,7 @@ package com.trilion.ecommerce.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.trilion.ecommerce.entity.Product;
-import com.trilion.ecommerce.exceptions.ProductNotFoundException;
+import com.trilion.ecommerce.exceptions.ProductException;
 import com.trilion.ecommerce.service.ProductService;
 
 import java.util.List;
@@ -44,7 +44,7 @@ public class ProductController {
 
   @PutMapping("/inventory/product/{id}/quantity/{qty}")
   public ResponseEntity<Product> updateProductQty(@PathVariable Long id, @PathVariable int qty)
-      throws ProductNotFoundException {
+      throws ProductException {
     Product product = inventoryService.updateProductQty(id, qty);
     return new ResponseEntity<>(product, HttpStatus.OK);
   }

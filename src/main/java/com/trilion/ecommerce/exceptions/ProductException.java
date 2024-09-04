@@ -1,10 +1,10 @@
 package com.trilion.ecommerce.exceptions;
 
-public class ProductNotFoundException extends Exception {
+public class ProductException extends Exception {
 
   private int code;
 
-  public ProductNotFoundException(int code, String message) {
+  public ProductException(int code, String message) {
     super(message);
     this.setCode(code);
   }

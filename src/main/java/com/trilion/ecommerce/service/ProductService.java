@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.trilion.ecommerce.entity.Product;
-import com.trilion.ecommerce.exceptions.ProductNotFoundException;
+import com.trilion.ecommerce.exceptions.ProductException;
 import com.trilion.ecommerce.repository.ProductRepository;
 
 @Service
@@ -29,14 +29,14 @@ public class ProductService {
     return product;
   }
 
-  public Product updateProductQty(Long id, int qty) throws ProductNotFoundException {
+  public Product updateProductQty(Long id, int qty) throws ProductException {
     Product product = this.getProduct(id);
 
     if (product != null && qty > 0) {
       product.setQuantity(qty);
       inventoryRepo.save(product);
     } else {
-      throw new ProductNotFoundException(404, "Product " + id + " not available");
+      throw new ProductException(404, "Product " + id + " not available");
     }
 
     return product;

@@ -40,7 +40,7 @@ public class OrderService {
       int orderQuantity = order.getQuantity();
       double unitPrice = product.getUnitPrice();
 
-      int productQuantity = product.getQuantity();
+      // int productQuantity = product.getQuantity();
 
       // Calculate totalCost
       double totalCost = unitPrice * orderQuantity;
@@ -48,12 +48,12 @@ public class OrderService {
       order.setTotalCost(totalCost);
       orderRepository.save(order);
 
-      // update product Quantity
-      int currentQuantity = productQuantity - orderQuantity;
-      if (currentQuantity >= 0) {
-        product.setQuantity(currentQuantity);
-        productRepository.save(product);
-      }
+      // // update product Quantity
+      // int currentQuantity = productQuantity - orderQuantity;
+      // if (currentQuantity >= 0) {
+      // product.setQuantity(currentQuantity);
+      // productRepository.save(product);
+      // }
     }
     return order;
   }
