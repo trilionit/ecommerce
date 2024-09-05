@@ -135,33 +135,28 @@ public class CartService {
 
   @Transactional
   public String removeFromCart(Cart payload, Long user_id, Long product_id) {
-    List<Cart> cartItems = cartRepository.getByUserId(user_id);
+    Cart cartItem = cartRepository.getByUserIdAndProductId(user_id, product_id);
     int quantity = payload.getQuantity();
-    String response = "";
+    String response = "not successful";
     // find the product
-    for (Cart item : cartItems) {
-      Product cartItem = item.getProduct();
-      Long cartItemProductId = cartItem.getId();
+    Product cartProduct = cartItem.getProduct();
 
-      if (cartItemProductId == product_id) {
-        item.setQuantity(item.getQuantity() - quantity);
-        cartRepository.save(item);
+    if (cartItem != null) {
+      cartProduct.setQuantity(cartItem.getQuantity() - quantity);
+      cartRepository.save(cartItem);
 
-        Product product = productRepository.getReferenceById(product_id);
-        int currentProductQty = product.getQuantity();
+      Product product = productRepository.getReferenceById(product_id);
+      int currentProductQty = product.getQuantity();
 
-        product.setQuantity(currentProductQty + quantity);
-        productRepository.save(product);
+      product.setQuantity(currentProductQty + quantity);
+      productRepository.save(product);
 
-        if (cartItem.getQuantity() == 0) {
-          cartRepository.delete(item);
-        }
-        response = "successful";
-      } else {
-        response = "not successful";
+      if (cartItem.getQuantity() == 0) {
+        cartRepository.delete(cartItem);
       }
-
+      response = "successful";
     }
+
     return response;
   }
 }
