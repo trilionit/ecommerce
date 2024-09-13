@@ -41,13 +41,13 @@ public class CartService {
   @Autowired
   OrderRepository orderRepository;
 
-  public Cart addToCart(Cart cart, Long product_id, Long user_id) throws ProductException {
+  public String addToCart(Cart cart, Long product_id, Long user_id) throws ProductException {
 
     Product product = productRepository.findById(product_id).get();
     User user = userRepository.findById(user_id).get();
 
     if (product.getQuantity() < cart.getQuantity()) {
-      throw new ProductException(404, "Exceeded Avaialable Product Quantity");
+      return "Product not available";
     }
 
     if (user != null && product != null) {
@@ -63,7 +63,7 @@ public class CartService {
     int currentQuantity = product.getQuantity() - cart.getQuantity();
     product.setQuantity(currentQuantity <= 0 ? 0 : currentQuantity);
     productRepository.save(product);
-    return cart;
+    return "Product " + product.getProductName() + " Added to cart";
   }
 
   private Cart addCartItems(Cart cart, Product product, User user) {

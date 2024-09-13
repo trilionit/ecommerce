@@ -30,9 +30,9 @@ public class CartController {
   }
 
   @PostMapping("cart/add/user/{userId}/product/{productId}")
-  public ResponseEntity<Cart> add(@RequestBody Cart payload, @PathVariable Long userId, @PathVariable Long productId)
+  public ResponseEntity<String> add(@RequestBody Cart payload, @PathVariable Long userId, @PathVariable Long productId)
       throws ProductException {
-    Cart addToCart = cartService.addToCart(payload, productId, userId);
+    String addToCart = cartService.addToCart(payload, productId, userId);
     return new ResponseEntity<>(addToCart, HttpStatus.OK);
   }
 

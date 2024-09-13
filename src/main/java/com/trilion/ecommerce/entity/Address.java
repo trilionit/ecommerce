@@ -28,6 +28,8 @@ public class Address {
   private String state;
   private String zipcode;
 
+  private boolean primaryAddress;
+
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime createdAt;
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -119,6 +121,14 @@ public class Address {
 
   public void setZipcode(String zipcode) {
     this.zipcode = zipcode;
+  }
+
+  public boolean isPrimaryAddress() {
+    return primaryAddress;
+  }
+
+  public void setPrimaryAddress(boolean isPrimaryAddress) {
+    this.primaryAddress = isPrimaryAddress;
   }
 
   public void setCreatedAt() {

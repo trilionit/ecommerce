@@ -78,4 +78,22 @@ public class OrderService {
   }
 
   // Other service calls
+
+  public String updateProductOrderWhenNotDelivered(Long orderId) {
+    Order order = orderRepository.findById(orderId).get();
+
+    if (order == null) {
+      return "Order not found";
+    }
+    int orderQuantity = order.getQuantity();
+
+    Product productOrder = order.getProduct();
+    int productQuantity = productOrder.getQuantity();
+    productOrder.setQuantity(productQuantity + orderQuantity);
+    productRepository.save(productOrder);
+
+    order.setQuantity(0);
+    orderRepository.save(order);
+    return "succesful";
+  }
 }
