@@ -1,12 +1,16 @@
 package com.trilion.ecommerce.entity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,11 +28,16 @@ public class Product {
   private int quantity;
   private double unitPrice;
 
-  // @ManyToMany
-  // // @JoinTable(name = "product_orders", joinColumns = @JoinColumn(name =
-  // // "user_id", referencedColumnName = "id"), inverseJoinColumns =
-  // // @JoinColumn(name = "order_id", referencedColumnName = "id"))
-  // private List<Orders> orders;
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  private LocalDateTime createdAt;
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  private LocalDateTime updatedAt;
+
+  @PrePersist
+  private void init() {
+    setCreatedAt();
+    setUpdatedAt();
+  }
 
   public String getSubCategory() {
     return subCategory;
@@ -42,7 +51,7 @@ public class Product {
     return unitPrice;
   }
 
-  public void setUnitPrice(int unitPrice) {
+  public void setUnitPrice(double unitPrice) {
     this.unitPrice = unitPrice;
   }
 
@@ -76,6 +85,22 @@ public class Product {
 
   public void setQuantity(int quantity) {
     this.quantity = quantity;
+  }
+
+  public void setCreatedAt() {
+    this.createdAt = LocalDateTime.now();
+  }
+
+  public void setUpdatedAt() {
+    this.updatedAt = LocalDateTime.now();
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public LocalDateTime getUpdatedAt() {
+    return updatedAt;
   }
 
 }

@@ -6,4 +6,5 @@ import com.trilion.ecommerce.entity.Product;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
   // Custom query Methods (if needed) can be defined here
+  public Product findByProductNameAndCategoryAndSubCategory(String ProductName, String category, String subCategory);
 }
