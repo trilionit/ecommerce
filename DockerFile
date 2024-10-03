@@ -1,0 +1,4 @@
+FROM openjdk:11-jre-slim
+VOLUME [ "/data" ]
+COPY target/ecommerce-app.jar  app.jar
+ENTRYPOINT [ "java", "-jar", "/app.jar" ]
