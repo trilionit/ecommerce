@@ -1,5 +1,5 @@
 pipeline {
-  agent { dockerfile true }
+  agent { any }
   environment {
     REGISTRY = 'Docker-registry'
     IMAGE_NAME = 'ecommerce-app'
