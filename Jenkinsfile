@@ -20,7 +20,7 @@ pipeline {
         sh 'mvn test'
       }
     }
-    stage('Bild Docker Image'){
+    stage('Build Docker Image'){
       steps {
         script {
           docker.build("${REGISTRY}/${IMAGE_NAME}:latest")
@@ -31,10 +31,10 @@ pipeline {
       steps {
         script {
           docker.withRegistry("https://${REGISTRY}", 'docker_credentials-id'){
-            sh"docker push ${REGISTRY}/${IMAGE_NAME}:latest"
+            sh "docker push ${REGISTRY}/${IMAGE_NAME}:latest"
             // DEPLOY TO SERVER (SSH OR ANY CLOUD PROVIDER)
             // sh ""
-            ssh user@your-server "docker pull ${REGISTRY}/${IMAGE_NAME}:latest && docker compose up -d"
+            ssh ec2-user@ec2-98-82-182-11.compute-1.amazonaws.com "docker pull ${REGISTRY}/${IMAGE_NAME}:latest && docker compose up -d"
           }
         }
       }
