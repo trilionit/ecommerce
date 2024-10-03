@@ -1,5 +1,5 @@
 pipeline {
-  agent { any }
+  agent any 
   environment {
     REGISTRY = 'Docker-registry'
     IMAGE_NAME = 'ecommerce-app'
