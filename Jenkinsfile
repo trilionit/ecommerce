@@ -2,7 +2,7 @@ pipeline {
   agent any
   tools { 
     maven 'Maven-3.9.9' 
-    jdk 'jdk8' 
+    jdk 'jdk17' 
   } 
   environment {
     REGISTRY = 'Docker-registry'
