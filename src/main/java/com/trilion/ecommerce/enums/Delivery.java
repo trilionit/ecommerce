@@ -1,4 +1,4 @@
-package com.trilion.ecommerce.enum;
+package com.trilion.ecommerce.enums;
 
 public enum Delivery {
   DELIVERED,
