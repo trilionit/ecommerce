@@ -1,5 +1,9 @@
 pipeline {
-  agent any 
+  agent any
+  tools { 
+    maven 'Maven 3.3.9' 
+    jdk 'jdk8' 
+  } 
   environment {
     REGISTRY = 'Docker-registry'
     IMAGE_NAME = 'ecommerce-app'
@@ -10,9 +14,20 @@ pipeline {
         git 'https://github.com/trilionit/ecommerce.git'
       }
     }
+    stage ('Initialize') {
+      steps {
+        sh '''
+            echo "PATH = ${PATH}"
+            echo "M2_HOME = ${M2_HOME}"
+        ''' 
+      }
+    }
     stage('Build'){
       steps {
-        sh 'mvn clean package'
+         git url: 'https://github.com/trilionit/ecommerce.git'
+         withMaven {
+          sh 'mvn clean verify'
+         }
       }
     }
     stage('Test'){
