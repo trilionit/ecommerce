@@ -41,18 +41,18 @@ pipeline {
         }
       }
     }
-    // stage('Deploy'){
-    //   steps {
-    //     script {
-    //       docker.withRegistry("https://${REGISTRY}", 'docker_credentials-id'){
-    //         sh "docker push ${REGISTRY}/${IMAGE_NAME}:latest"
-    //         // DEPLOY TO SERVER (SSH OR ANY CLOUD PROVIDER)
-    //         // sh ""
-    //         ssh user@your-server "docker pull ${REGISTRY}/${IMAGE_NAME}:latest && docker compose up -d"
-    //       }
-    //     }
-    //   }
-    // }
+    stage('Deploy'){
+      steps {
+        script {
+          docker.withRegistry("https://${REGISTRY}", 'docker_credentials-id'){
+            sh "docker push ${REGISTRY}/${IMAGE_NAME}:latest"
+            // DEPLOY TO SERVER (SSH OR ANY CLOUD PROVIDER)
+            // sh ""
+            ssh user@your-server "docker pull ${REGISTRY}/${IMAGE_NAME}:latest && docker compose up -d"
+          }
+        }
+      }
+    }
   }
   post {
     success {
