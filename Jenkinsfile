@@ -3,10 +3,10 @@ pipeline {
   tools { 
     maven 'M2_HOME'
   } 
-  environment {
-    REGISTRY = 'Docker-registry'
-    IMAGE_NAME = 'ecommerce-app'
-  }
+  // environment {
+  //   REGISTRY = 'Docker-registry'
+  //   IMAGE_NAME = 'ecommerce-app'
+  // }
   stages {
     stage('checkout'){
       steps {
