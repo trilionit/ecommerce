@@ -10,7 +10,7 @@ pipeline {
   stages {
     // stage('checkout'){
     //   steps {
-    //     git 'https://github.com/trilionit/ecommerce.git'
+    //     git checkout 'https://github.com/trilionit/ecommerce.git'
     //   }
     // }
     stage ('Initialize') {
@@ -23,10 +23,7 @@ pipeline {
     }
     stage('Build'){
       steps {
-         git url: 'https://github.com/trilionit/ecommerce.git'
-         withMaven {
-          sh 'mvn clean verify'
-         }
+        sh 'mvn clean verify'
       }
     }
     stage('Test'){
