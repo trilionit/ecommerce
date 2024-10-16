@@ -8,11 +8,11 @@ pipeline {
   //   IMAGE_NAME = 'ecommerce-app'
   // }
   stages {
-    stage('checkout'){
-      steps {
-        git 'https://github.com/trilionit/ecommerce.git'
-      }
-    }
+    // stage('checkout'){
+    //   steps {
+    //     git 'https://github.com/trilionit/ecommerce.git'
+    //   }
+    // }
     stage ('Initialize') {
       steps {
         sh '''
